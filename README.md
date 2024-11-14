@@ -5,7 +5,6 @@ RobustEmailValidator is a flexible and powerful Python library for validating em
 ## Features
 
 - **Email Syntax Validation**: Checks if an email address follows proper syntax.
-- **Bulk Email Validation**: Validate multiple emails at once.
 - **Disposable Email Detection**: Identifies if an email address belongs to a disposable service.
 - **MX Record Verification**: Checks if the email domain has valid MX (Mail Exchange) records.
 
