@@ -20,6 +20,14 @@ Ensure you have the following installed:
 
 ### Installing via pip
 
+You can install RobustEmailValidator directly from PyPI:
+
+```bash
+pip install robust_email_validator
+```
+
+### Installing Manually
+
 1. Clone this repository to your local machine:
 
    ```bash
@@ -31,12 +39,6 @@ Ensure you have the following installed:
 
    ```bash
    pip install .
-   ```
-
-   Alternatively, once published on PyPI:
-
-   ```bash
-   pip install robust-email-validator
    ```
 
 ## Usage
