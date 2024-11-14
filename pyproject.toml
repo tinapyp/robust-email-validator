@@ -1,7 +1,7 @@
 [project]
-name = "emailvalidator"
+name = "robust_email_validator"
 version = "0.1.0"
-description = "Add your description here"
+description = "Make email list with confidence"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

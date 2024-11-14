@@ -1,119 +1,120 @@
-# Email Validator Service
+# Robust Email Validator
 
-This is an email validation service built using FastAPI. It verifies email addresses based on format, checks for disposable domains, and verifies the presence of MX records for the email's domain.
+RobustEmailValidator is a flexible and powerful Python library for validating email addresses. It verifies email syntax, checks for disposable domains, and validates domain MX records to ensure email deliverability.
 
 ## Features
 
-- **Pattern validation**: Ensures the email matches a standard format.
-- **Disposable domain check**: Identifies and filters out emails from disposable domains.
-- **MX record verification**: Confirms the domain has MX records to validate its existence.
+- **Email Syntax Validation**: Checks if an email address follows proper syntax.
+- **Bulk Email Validation**: Validate multiple emails at once.
+- **Disposable Email Detection**: Identifies if an email address belongs to a disposable service.
+- **MX Record Verification**: Checks if the email domain has valid MX (Mail Exchange) records.
 
-## Project Structure
-
-```plaintext
-email_validator_service/
-├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── config.py
-│   ├── schemas.py
-│   ├── services/
-│   │   ├── __init__.py
-│   │   ├── email_validator.py   # Email validation logic
-│   ├── utils/
-│   │   ├── __init__.py
-│   │   ├── dns_checker.py       # Checks MX records for domains
-│   │   ├── disposable_checker.py # Loads and checks disposable domains
-│   └── tests/
-│       ├── __init__.py
-│       ├── test_email_validator.py # Unit tests
-├── requirements.txt
-└── README.md
-```
-
-## Setup
+## Installation
 
 ### Prerequisites
 
-- Python 3.8+
-- pip (Python package manager)
+Ensure you have the following installed:
 
-### Installation
+- Python 3.7 or higher
+- `pip` for dependency management
 
-1. Clone the repository:
+### Installing via pip
 
-   ```bash
-   git clone https://github.com/your-username/email_validator_service.git
-   cd email_validator_service
-   ```
-
-2. Install dependencies:
+1. Clone this repository to your local machine:
 
    ```bash
-   pip install -r requirements.txt
+   git clone https://github.com/tinapyp/robust-email-validator.git
+   cd robust-email-validator
    ```
 
-3. (Optional) Download the disposable domains list:
-   The service uses an external list of disposable domains. By default, this list is fetched dynamically, but you can update `DISPOSABLE_URL` in `app/config.py` to customize the source.
+2. Install the library and its dependencies:
 
-### Running the Service
+   ```bash
+   pip install .
+   ```
 
-Start the FastAPI application using Uvicorn:
+   Alternatively, once published on PyPI:
 
-```bash
-uvicorn app.main:app --reload
+   ```bash
+   pip install robust-email-validator
+   ```
+
+## Usage
+
+The library is easy to integrate into any Python project.
+
+### Validating a Single Email
+
+```python
+from robust_email_validator import validated_email
+
+email = "test@example.com"
+result = validated_email(email)
+print(f"Is {email} valid? {result.is_valid}")
 ```
 
-The service will be available at `http://127.0.0.1:8000`, and you can test the API via the interactive documentation at `http://127.0.0.1:8000/docs`.
+### Checking if Email Domain is Disposable
 
-### API Endpoints
+```python
+from robust_email_validator import check_email_disposable
 
-- `POST /validate-email`: Validate an email address.
-
-#### Request Body
-
-```json
-{
-  "email": "test@example.com"
-}
+email = "test@tempmail.com"
+result = check_email_disposable(email)
+print(f"Is {email} disposable? {'Yes' if not result.is_valid else 'No'}")
 ```
 
-#### Response
+### Checking if Email Domain Has MX Records
 
-- **200 OK**: Email validation results
+```python
+from robust_email_validator import check_email_mx
 
-  ```json
-  {
-    "email": "test@example.com",
-    "is_valid": true
-  }
-  ```
-
-## Testing
-
-Run tests with `pytest`:
-
-```bash
-pytest app/tests/test_email_validator.py
+email = "test@example.com"
+result = check_email_mx(email)
+print(f"Does {email} have MX records? {'Yes' if result.is_valid else 'No'}")
 ```
-
-### Test Cases
-
-- **Valid Email**: Verifies valid email formatting, non-disposable, and valid MX records.
-- **Invalid Email Pattern**: Fails if email does not match the standard format.
-- **Disposable Domain**: Filters out disposable domains based on a blacklist.
-- **No MX Records**: Flags domains without MX records as invalid.
 
 ## Configuration
 
-- **`BATCH_SIZE`**: Number of emails processed per batch (set in `app/config.py`).
-- **`WORKERS`**: Number of parallel threads for DNS checking.
-- **`DISPOSABLE_URL`**: URL for disposable domains list.
+The library allows configuration of the disposable domain list source. In `config.py`, set the URL to fetch a disposable domain list as needed:
 
-## Dependencies
+```python
+# config.py
+DISPOSABLE_URL = "https://someapi.com/disposable-domains"
+```
 
-- `fastapi`: Web framework
-- `uvicorn`: ASGI server
-- `requests`: For fetching disposable domains list
-- `dnspython`: For MX record verification
-- `pandas` and `numpy`: Optional, for data handling if needed
+## Development
+
+To contribute:
+
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature-branch`.
+3. Implement your changes and write tests.
+4. Run tests to ensure functionality: `pytest`.
+5. Submit a pull request with a summary of your changes.
+
+### Running Tests
+
+To run tests, install `pytest` if needed:
+
+```bash
+pip install pytest
+```
+
+Then run:
+
+```bash
+pytest test/test_email_validator.py
+```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+- [dnspython](https://www.dnspython.org/) for DNS query handling.
+- [requests](https://requests.readthedocs.io/en/latest/) for HTTP requests to retrieve disposable domains.
+
+---
+
+Contributions and feedback are welcome! Open an issue or submit a pull request if you’d like to get involved.

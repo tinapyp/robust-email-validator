@@ -1,5 +1,5 @@
 import requests
-from RobustEmailValidator.config import DISPOSABLE_URL
+from robust_email_validator.config import DISPOSABLE_URL
 from typing import Set
 
 # Set to hold disposable domains
